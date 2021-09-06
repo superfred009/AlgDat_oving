@@ -80,6 +80,24 @@ public class oppgave1 {
         }
     }
 
+    public static long fakultetet(int n) {
+        int i = n;
+        long sum = 0;
+        while (i>0) {
+            sum += i * (i-1);
+            i--;
+        }
+        return sum;
+    }
+
+    public static long fakultet(int n) {
+        long fact = 1;
+        for (int i = 2; i <= n; i++) {
+            fact = fact * i;
+        }
+        return fact;
+    }
+
 
 
     public static void main(String[] args){
@@ -91,5 +109,6 @@ public class oppgave1 {
         System.out.println("Indeksen til største tall er "+maksIndex(liste));
         System.out.println("Indeksen til minste tall er "+minIndex(liste));
         skrivUtListe(minmaks(liste));
+        System.out.println("fakultet av 5 er "+fakultet(5));
     }
 }
