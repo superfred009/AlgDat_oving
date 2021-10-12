@@ -10,7 +10,7 @@ public class BubbleSort {
         System.out.println("Sorterte verdier : ");
         System.out.println(Arrays.toString(val));
 
-        int index1 = binarySearchRecursive(val, 12, 0, val.length-1); //binarySearch(val, 12);
+        int index1 = binarySearchRecursive(val, 9, 0, val.length-1); //binarySearch(val, 12);
         System.out.println("fant tallet 9 på plass "+index1);
     }
 
