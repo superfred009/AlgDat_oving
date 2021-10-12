@@ -12,7 +12,7 @@ public class Stakk {
 
     } // interface Stakk
 
-    private static class TabellStakk<T> implements Stakken<T> {
+    public static class TabellStakk<T> implements Stakken<T> {
         private T[] a;                     // en T-tabell
         private int antall;                // antall verdier på stakken
 
