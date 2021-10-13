@@ -1,5 +1,7 @@
 package ovingUke41;
 
+import java.util.NoSuchElementException;
+
 public class Stakk {
     public interface Stakken<T> {         // eng: Stack
 
@@ -32,11 +34,7 @@ public class Stakk {
         // de andre metodene skal inn her!
         @Override
         public boolean tom() {
-            if (antall == 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return antall == 0;
         }
 
         @Override
@@ -96,29 +94,89 @@ public class Stakk {
         }
     }  // class TabellStakk
 
-    public static void main(String[] args) {
-        char[] values = "ABCDEF".toCharArray();
-        TabellStakk stakk = new TabellStakk<>();
 
-        for (int i = 0; i< values.length; i++) {
-            stakk.leggInn(values[i]);
+    public class LenketStakk<T> implements Stakken<T>
+    {
+        private static final class Node<T>       // en «nøstet» nodeklasse
+        {
+            private T verdi;
+            private Node<T> neste;
+
+            private Node(T verdi, Node<T> neste)   // nodekonstruktør
+            {
+                this.verdi = verdi;
+                this.neste = neste;
+            }
+
+        } // class Node
+
+        private Node<T> hode;             // stakkens topp
+        private int antall;               // antall på stakken
+
+        public LenketStakk()              // konstruktør
+        {
+            hode = null;
+            antall = 0;
         }
-        System.out.println(stakk);
-        System.out.println();
 
-        System.out.println("Tar ut : "+stakk.taUt());
-        System.out.println("Stakken nå : "+stakk);
-        System.out.println();
+        // Her skal de andre metodene fra grensesnittet Stakk<T> stå
 
-        System.out.println("siste verdi er nå "+stakk.kikk());
-        System.out.println();
+        @Override
+        public void leggInn(T verdi) {
+            hode = new Node<>(verdi, hode);
+            antall++;
+        }
 
-        stakk.leggInn("K");
-        System.out.println("La inn K");
-        System.out.println("Stakken nå : "+stakk);
-        System.out.println();
+        @Override
+        public T kikk() {
+            if (tom()) {
+                throw new NoSuchElementException("Listen er tom!");
+            }
+            return hode.verdi;
+        }
 
-        stakk.nullstill();
-        System.out.println("Stakken er nullstilt : "+stakk);
-    }
+        @Override
+        public T taUt() {
+            if (tom()) {
+                throw new NoSuchElementException("Listen er tom!");
+            }
+            T tmp = hode.verdi;
+            hode = hode.neste;
+            antall--;
+            return tmp;
+        }
+
+        @Override
+        public int antall() {
+            return antall;
+        }
+
+        @Override
+        public boolean tom() {
+            return antall == 0;
+        }
+
+        @Override
+        public void nullstill() {
+            hode = null;
+            antall = 0;
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder s = new StringBuilder();
+            Node<T> p = hode;
+            for (int i = 0; i < antall; i++) {
+                if (i != 0) {
+                    s.append(',').append(' ');
+                }
+                s.append(p.verdi);
+                p = p.neste;
+            }
+            s.append(']');
+
+            return s.toString();
+        }
+
+    }  // class LenketStakk
 }
